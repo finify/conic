@@ -42,7 +42,7 @@ class Users extends \Model{
         
      }
 
-     public function login($rememberMe=false, $id){
+     public function login($id,$rememberMe=false){
        
          Session::set($this->_sessionName, $id);
          if($rememberMe){
@@ -53,15 +53,15 @@ class Users extends \Model{
              $fields = ['session'=>$hash, 'user_agent'=>$user_agent, 'user_id'=>$id];
              
              
-             $this->_db->query("DELETE FROM users_session WHERE user_id = ? AND user_agent = ? , [$id , $user_agent]");
+             //$this->_db->query("DELETE FROM users_session WHERE user_id = ? AND user_agent = ? , [$id , $user_agent]");
             
-             $this->_db->insert('users_session', $fields);
+             //$this->_db->insert('users_session', $fields);
          }
      }
 
     public function logout(){
         $user_agent = \Session::uagent_no_version();
-        $this->_db->query("DELETE FROM users_session WHERE user_id = ? AND user_agent = ? , [$this->id , $user_agent]");
+        //$this->_db->query("DELETE FROM users_session WHERE user_id = ? AND user_agent = ? , [$this->id , $user_agent]");
         Session::delete(CURRENT_USER_SESSION_NAME);
         if(Cookie::exist(REMEMBER_ME_COOKIE_NAME)){
             Cookie::delete(REMEMBER_ME_COOKIE_NAME);
