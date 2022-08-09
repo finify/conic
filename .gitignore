@@ -1,0 +1,7 @@
+.htaccess
+composer.json
+composer.lock
+core
+config
+vendor
+assets

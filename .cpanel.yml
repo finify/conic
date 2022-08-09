@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/conibgrz/app.conichomesandproperties.com/
+    - /bin/cp -R app $DEPLOYPATH
