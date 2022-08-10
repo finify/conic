@@ -20,7 +20,7 @@
                         aria-selected="true"
                     >
                         <i class="tf-icons bx bx-wallet-alt"></i> Transaction 
-                        <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-danger">3</span>
+                        <!-- <span class="badge rounded-pill badge-center h-px-20 w-px-20 bg-label-danger">3</span> -->
                     </button>
                     </li>
                     <li class="nav-item">
@@ -40,44 +40,63 @@
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="navs-justified-home" role="tabpanel">
                         <ul class="p-0 m-0">
-                            <li class="d-flex mb-4 pb-1">
-                            <div class="avatar flex-shrink-0 me-3">
-                                <span class="avatar-initial rounded bg-label-primary"
-                                ><i class='bx bxs-left-down-arrow-circle'></i>
-                                </span>
-                            </div>
-                            <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                <div class="me-2">
-                                <h6 class="mb-0">Izuegbu ifeanyi</h6>
-                                <small class="text-muted">Made a part payment of <b>200,000</b> for <b>Eco sun</b> property</small>
-                                </div>
-                                <div class="user-progress">
-                                <small class="fw-semibold">21/02/2022</small>
-                                <span class="badge bg-secondary">9:00pm</span>
-                                </div>
-                            </div>
-                            </li>
+                        <?php
+                            $Notifications = $this->Notifications;
+                            foreach($Notifications as $notification){
+                                if($notification->notification_type == "transaction"){
+                                    echo '
+                                    <li class="d-flex mb-4 pb-1">
+                                        <div class="avatar flex-shrink-0 me-3">
+                                            <span class="avatar-initial rounded bg-label-primary"
+                                            ><i class="bx bxs-left-down-arrow-circle"></i>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                            <div class="me-2">
+                                            <h6 class="mb-0">'.$notification->client_name.'</h6>
+                                            <small class="text-muted">'.$notification->description.'</small>
+                                            </div>
+                                            <div class="user-progress">
+                                            <small class="fw-semibold">'.$notification->datecreated.'</small>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <hr>
+                                    ';
+                                }
+                            }
+                        ?>
+                            
                         </ul>
                     </div>
                     <div class="tab-pane fade" id="navs-justified-profile" role="tabpanel">
                         <ul class="p-0 m-0">
-                            <li class="d-flex mb-4 pb-1">
-                            <div class="avatar flex-shrink-0 me-3">
-                                <span class="avatar-initial rounded bg-label-primary"
-                                ><i class='bx bxs-bell-ring'></i>
-                                </span>
-                            </div>
-                            <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                <div class="me-2">
-                                <h6 class="mb-0">Izuegbu ifeanyi</h6>
-                                <small class="text-muted">Made a part payment of <b>200,000</b> for <b>Eco sun</b> property</small>
-                                </div>
-                                <div class="user-progress">
-                                <small class="fw-semibold">21/02/2022</small>
-                                <span class="badge bg-secondary">9:00pm</span>
-                                </div>
-                            </div>
-                            </li>
+                        <?php
+                            $Notifications = $this->Notifications;
+                            foreach($Notifications as $notification){
+                                if($notification->notification_type == "reminder"){
+                                    echo '
+                                    <li class="d-flex mb-4 pb-1">
+                                        <div class="avatar flex-shrink-0 me-3">
+                                            <span class="avatar-initial rounded bg-label-primary"
+                                            ><i class="bx bxs-bell-ring"></i>
+                                            </span>
+                                        </div>
+                                        <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                            <div class="me-2">
+                                            <h6 class="mb-0">'.$notification->client_name.'</h6>
+                                            <small class="text-muted">'.$notification->description.'</small>
+                                            </div>
+                                            <div class="user-progress">
+                                            <small class="fw-semibold">'.$notification->datecreated.'</small>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <hr>
+                                    ';
+                                }
+                            }
+                        ?>
                         </ul>
                     </div>
                 </div>

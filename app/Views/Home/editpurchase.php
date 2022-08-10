@@ -13,9 +13,12 @@ $first_payment = $Purchase->first_payment;
 $amount_paid = $Purchase->amount_paid;
 $amount_due = $Purchase->amount_due;
 $duration = $Purchase->duration;
+$duration_dates = $Purchase->duration_dates;
 $datecreated = $Purchase->datecreated;
 $dateending = $Purchase->dateending;
 $purchase_status = $Purchase->purchase_status;
+
+$amount_due_monthly = ($property_amount - $first_payment) / $duration;
 
 if($purchase_status == 0){
     $status = "<span class='badge bg-label-primary me-1'>Active</span>";
@@ -38,7 +41,9 @@ $client_last_name = $Client->last_name;
             <div class="col-md-12">
                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
                     <li class="nav-item">
-                    <button
+                        <?php 
+                        if($purchase_status == 0){ ?>
+                            <button
                           type="button"
                           class="btn btn-primary"
                           data-bs-toggle="modal"
@@ -46,6 +51,9 @@ $client_last_name = $Client->last_name;
                         >
                           Make Payment <i class="bx bx-wallet me-1"></i>
                         </button>
+                        <?php
+                        } ?>
+                        
 
                         <!-- Modal -->
                         <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
@@ -107,7 +115,14 @@ $client_last_name = $Client->last_name;
                         <div class="d-flex align-items-start align-items-sm-center gap-4">
                             <h1 class="display-5 mb-0"><?=$property_name?></h1> </br>
                             <h4> <?=$status?></h4>
-                        
+                            <button
+                          type="button"
+                          style="width:200px"
+                          class="btn btn-primary"
+                          onclick="window.print()"
+                        >
+                          Print page <i class="bx bx-printer me-1"></i>
+                        </button>
                         </div>
                     </div>
                     <hr class="my-0" />
@@ -127,6 +142,14 @@ $client_last_name = $Client->last_name;
                                     <td>₦<?= number_format($property_amount)?></td>
                                 </tr>
                                 <tr>
+                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Quantity</strong></td>
+                                    <td><?=$property_quantity?> Plot/s</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>First payment</strong></td>
+                                    <td>₦<?= number_format($first_payment) ?></td>
+                                </tr>
+                                <tr>
                                     <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Amount paid</strong></td>
                                     <td>₦<?= number_format($amount_paid) ?></td>
                                 </tr>
@@ -137,6 +160,18 @@ $client_last_name = $Client->last_name;
                                 <tr>
                                     <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Duration</strong></td>
                                     <td><?=$duration?> Months</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Amount due monthly</strong></td>
+                                    <td>₦<?= number_format($amount_due_monthly)?> </td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Date created</strong></td>
+                                    <td><?= $datecreated?> </td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Payment dates</strong></td>
+                                    <td><?= ltrim($duration_dates, ',')?> </td>
                                 </tr>
                                 <!-- <tr>
                                     <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Propert</strong></td>

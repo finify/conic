@@ -87,7 +87,7 @@
         <div class="card">
             <h5 class="card-header">All Properties</h5>
             <div class="table-responsive text-nowrap">
-                <table class="table table-dark">
+                <table id="homeTable" class="table table-dark">
                 <thead>
                     <tr>
                     <th>Property name</th>
@@ -100,9 +100,10 @@
                     $Properties = $this->Properties;
                     if(!empty($Properties)){
                         foreach($Properties as $Property){
+                            $property_amount = number_format($Property->amount);
                             echo "<tr>
                                     <td>$Property->property_name </td>
-                                    <td>$Property->amount</td>
+                                    <td>₦$property_amount</td>
                                     <td>
                                         <div class='dropdown'>
                                         <button type='button' class='btn p-0 dropdown-toggle hide-arrow' data-bs-toggle='dropdown'>

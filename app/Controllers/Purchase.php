@@ -58,28 +58,38 @@ class Purchase extends \Controller{
             if($amount_due >= $amount){
                 $newamount_paid = $amount_paid + $amount;
                 $newamount_due = $amount_due - $amount;
-            }
 
-            $fields1 = [
-                'amount_paid' => $newamount_paid,
-                'amount_due' => $newamount_due,
-            ];
-            $this->PurchaseModel->updatePurchase($fields1,$purchase_id);
-          
-
-            $inserted = $this->PaymentModel->insertRows($fields);
-
-
-            if($inserted){
-                $data = [
-                    'insertedstatus'=> true
+                $fields1 = [
+                    'amount_paid' => $newamount_paid,
+                    'amount_due' => $newamount_due
                 ];
-            }else{
-                $data = [
-                    'insertedstatus'=> false
-                ];
+                $updated = $this->PurchaseModel->updatePurchase($fields1,$purchase_id);
+
+                $purchase = $this->PurchaseModel->getPurchaseById($purchase_id);
+
+                $purchase = $purchase[0];
+                if($purchase->amount_paid == $purchase->property_amount){
+                    $fields2 = [
+                        'purchase_status' => 1
+                    ];
+                    $updated2 = $this->PurchaseModel->updatePurchase($fields2,$purchase_id);
+                }
+
+                $inserted = $this->PaymentModel->insertRows($fields);
+
+
+                if($inserted && $updated){
+                    $data = [
+                        'insertedstatus'=> true
+                    ];
+                }else{
+                    $data = [
+                        'insertedstatus'=> false
+                    ];
+                }
+
+
             }
-        
         }
 
         $this->editpurchaseAction($purchase_id,$data);

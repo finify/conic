@@ -49,6 +49,8 @@ if(!Session::exists(CURRENT_USER_SESSION_NAME)){
     <link rel="stylesheet" href="<?=PROOT?>assets/vendor/libs/apex-charts/apex-charts.css" />
 
     <!-- Page CSS -->
+    <link rel="stylesheet" href="//cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="//cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
 
     <!-- Helpers -->
     <script src="<?=PROOT?>assets/vendor/js/helpers.js"></script>
@@ -213,6 +215,39 @@ if(!Session::exists(CURRENT_USER_SESSION_NAME)){
     <!-- Page JS -->
     <script src="<?=PROOT?>assets/js/dashboards-analytics.js"></script>
 
+    <script src="//cdn.datatables.net/1.12.0/js/jquery.dataTables.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/2.2.3/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script>
+
+    <script>
+        $(document).ready( function () {
+            $('#homeTable').DataTable({
+                ordering: true,
+                dom: 'Bfrtip',
+                buttons: [
+                    'excel', 'pdf', 'print'
+                ],
+                "pageLength": 50,
+            });
+        } );
+
+ $(document).ready( function () {
+    $('#myTable1').DataTable({
+        ordering: false,
+    });
+} );
+
+
+$(document).ready( function () {
+    $('#myTable2').DataTable({
+        ordering: false,
+    });
+} );
+    </script>
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>

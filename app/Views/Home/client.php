@@ -92,7 +92,7 @@
         <div class="card">
             <h5 class="card-header">All Clients</h5>
             <div class="table-responsive text-nowrap">
-                <table class="table table-dark">
+                <table id="homeTable" class="table table-dark">
                 <thead>
                     <tr>
                     <th>Full name</th>

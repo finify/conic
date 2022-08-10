@@ -12,7 +12,7 @@ $client_id = $Client->id;
 
 ?>
 <?php $this->start('body');?>
-    <div class="container-xxl flex-grow-1 container-p-y">
+    <div id="full-page" class="container-xxl flex-grow-1 container-p-y">
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Client /</span> <?=$client_first_name?></h4>
         <div class="row">
             <div class="col-md-12">
@@ -141,10 +141,15 @@ $client_id = $Client->id;
             
                 <div class="card mb-4">
                     <h5 class="card-header">Edit Client Details</h5>
-                    <!-- Account -->
-                    <!-- <div class="card-body">
-                        
-                    </div> -->
+                    <button
+                          type="button"
+                          style="width:200px"
+                          class="btn btn-primary"
+                          onclick="window.print()"
+                        >
+                          Print page <i class="bx bx-printer me-1"></i>
+                        </button>
+
                     <hr class="my-0" />
                     <div class="card-body">
                     <form id="formAccountSettings" action="<?=PROOT?>client/updateclient/<?=$client_id?>" method="POST">
@@ -197,7 +202,7 @@ $client_id = $Client->id;
                 <div class="card">
                     <h5 class="card-header">All Properties purchase</h5>
                     <div class="table-responsive text-nowrap">
-                        <table class="table table-dark">
+                        <table id="homeTable" class="table table-dark">
                         <thead>
                             <tr>
                             <th>Property</th>
@@ -217,10 +222,12 @@ $client_id = $Client->id;
                                     }elseif($ClientPurchase->purchase_status == 1){
                                         $status = "<span class='badge bg-label-success me-1'>Completed</span>";
                                     }
+                                    $amount_due = number_format($ClientPurchase->amount_due);
+                                    $amount_paid = number_format($ClientPurchase->amount_paid);
                                     echo "<tr>
                                             <td>$ClientPurchase->property_name </td>
-                                            <td>$ClientPurchase->amount_due </td>
-                                            <td>$ClientPurchase->amount_paid </td>
+                                            <td>₦$amount_due </td>
+                                            <td>₦$amount_paid </td>
                                             <td>$status </td>
                                             <td>
                                                 <div class='dropdown'>
