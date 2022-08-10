@@ -31,140 +31,141 @@ class Cron extends \Controller{
             $property_amount = $purchase->property_amount;
             $return_dates = $purchase->duration_dates;
             $dateending = $purchase->dateending;
+            $purchase_status = $purchase->purchase_status;
 
-            $client = $this->ClientsModel->getClient($client_id);
-            $client_first_name = $client[0]->first_name;
-            $client_last_name = $client[0]->last_name;
+            //check if status is 0 to know if account still active
+            if($purchase_status == 0){
 
-            $client_name = "$client_first_name $client_last_name";
+                $client = $this->ClientsModel->getClient($client_id);
+                $client_first_name = $client[0]->first_name;
+                $client_last_name = $client[0]->last_name;
 
-            $description = "Reminder of <b>$client_name</b>'s monthly payment for <b>$property_name</b> due in one week time";
+                $client_name = "$client_first_name $client_last_name";
 
-            $description1 = "Reminder of <b>$client_name</b>'s monthly payment for <b>$property_name</b> due today";
+                $description = "Reminder of <b>$client_name</b>'s monthly payment for <b>$property_name</b> due in one week time";
 
-            $remind_dates = explode (",", $return_dates);
+                $description1 = "Reminder of <b>$client_name</b>'s monthly payment for <b>$property_name</b> due today";
 
-            foreach ($remind_dates as $dates) { 
-                if($dates != ""){
-                    
-                    $dates1  = strtotime($dates);
+                $remind_dates = explode (",", $return_dates);
 
-                    $d=strtotime("-1 Week",strtotime($dates));
-                    $lessdate = date('d-m-Y', $d);
-                    $lessdate1    = strtotime($lessdate);
+                foreach ($remind_dates as $dates) { 
+                    if($dates != ""){
+                        
+                        $dates1  = strtotime($dates);
 
-                    
-                    $Notification = $this->NotificationModel->getNotificationBydate($lessdate,$client_id);
-
-                    if(!$Notification){ //if nofication is not found in db
-                        //add to notification
-
-
-                        $fields = [
-                            'client_id' => $client_id,
-                            'client_name' => $client_name,
-                            'notification_type' => $notification_type,
-                            'description' => $description,
-                            'seen' => 0,
-                            'datecreated' => $lessdate 
-                        ];
+                        $d=strtotime("-1 Week",strtotime($dates));
+                        $lessdate = date('d-m-Y', $d);
+                        $lessdate1    = strtotime($lessdate);
 
                         
-                        if($currentdate === $lessdate1){
-                            $this->NotificationModel->insertRows($fields);
+                        $Notification = $this->NotificationModel->getNotificationBydate($lessdate,$client_id);
+
+                        if(!$Notification){ //if nofication is not found in db
+                            //add to notification
+
+
+                            $fields = [
+                                'client_id' => $client_id,
+                                'client_name' => $client_name,
+                                'notification_type' => $notification_type,
+                                'description' => $description,
+                                'seen' => 0,
+                                'datecreated' => $lessdate 
+                            ];
+
+                            
+                            if($currentdate === $lessdate1){
+                                $this->NotificationModel->insertRows($fields);
+
+                                //email admin
+                            }
+                            
+
+                            
+                            
+                        }
+
+                        $Notification1 = $this->NotificationModel->getNotificationBydate($dates,$client_id);
+
+                        if(!$Notification1){
+                            //add to notification
+                            $fields = [
+                                'client_id' => $client_id,
+                                'client_name' => $client_name,
+                                'notification_type' => $notification_type,
+                                'description' => $description1,
+                                'seen' => 0,
+                                'datecreated' => $dates 
+                            ];
+
+                            if($currentdate === $dates1){
+                                $this->NotificationModel->insertRows($fields);
+                            }
+
+                            
 
                             //email admin
+                            
                         }
-                        
-
-                        
-                        
+                        // echo "real" .$dates ."</br>";
                     }
+                }
 
-                    $Notification1 = $this->NotificationModel->getNotificationBydate($dates,$client_id);
+                //nofication for ending date
+                $dateending = $purchase->dateending;
 
-                    if(!$Notification1){
-                        //add to notification
-                        $fields = [
-                            'client_id' => $client_id,
-                            'client_name' => $client_name,
-                            'notification_type' => $notification_type,
-                            'description' => $description1,
-                            'seen' => 0,
-                            'datecreated' => $dates 
-                        ];
+                $dateending1  = strtotime($dateending);
 
-                        if($currentdate === $dates1){
-                            $this->NotificationModel->insertRows($fields);
-                        }
+                $d=strtotime("-1 Week",strtotime($dateending));
+                $lessdate = date('d-m-Y', $d);
+                $lessdate1    = strtotime($lessdate);
 
-                        
+                
+                $Notification = $this->NotificationModel->getNotificationBydate($lessdate,$client_id);
+
+                if(!$Notification){ //if nofication is not found in db
+                    //add to notification
+
+
+                    $fields = [
+                        'client_id' => $client_id,
+                        'client_name' => $client_name,
+                        'notification_type' => $notification_type,
+                        'description' => $description,
+                        'seen' => 0,
+                        'datecreated' => $lessdate 
+                    ];
+
+                    
+                    if($currentdate === $lessdate1){
+                        $this->NotificationModel->insertRows($fields);
 
                         //email admin
-                        
                     }
-                    // echo "real" .$dates ."</br>";
+                    
+
+                    
+                    
+                }
+
+                $Notification1 = $this->NotificationModel->getNotificationBydate($dateending,$client_id);
+
+                if(!$Notification1){
+                    //add to notification
+                    $fields = [
+                        'client_id' => $client_id,
+                        'client_name' => $client_name,
+                        'notification_type' => $notification_type,
+                        'description' => $description1,
+                        'seen' => 0,
+                        'datecreated' => $dates 
+                    ];
+
+                    if($currentdate === $dateending1){
+                        $this->NotificationModel->insertRows($fields);
+                    }
                 }
             }
-
-            //nofication for ending date
-            $dateending = $purchase->dateending;
-
-            $dateending1  = strtotime($dateending);
-
-            $d=strtotime("-1 Week",strtotime($dateending));
-            $lessdate = date('d-m-Y', $d);
-            $lessdate1    = strtotime($lessdate);
-
-            
-            $Notification = $this->NotificationModel->getNotificationBydate($lessdate,$client_id);
-
-            if(!$Notification){ //if nofication is not found in db
-                //add to notification
-
-
-                $fields = [
-                    'client_id' => $client_id,
-                    'client_name' => $client_name,
-                    'notification_type' => $notification_type,
-                    'description' => $description,
-                    'seen' => 0,
-                    'datecreated' => $lessdate 
-                ];
-
-                
-                if($currentdate === $lessdate1){
-                    $this->NotificationModel->insertRows($fields);
-
-                    //email admin
-                }
-                
-
-                
-                
-            }
-
-            $Notification1 = $this->NotificationModel->getNotificationBydate($dateending,$client_id);
-
-            if(!$Notification1){
-                //add to notification
-                $fields = [
-                    'client_id' => $client_id,
-                    'client_name' => $client_name,
-                    'notification_type' => $notification_type,
-                    'description' => $description1,
-                    'seen' => 0,
-                    'datecreated' => $dates 
-                ];
-
-                if($currentdate === $dateending1){
-                    $this->NotificationModel->insertRows($fields);
-                }
-            }
-
         }
     }
-
-
-    
 }
