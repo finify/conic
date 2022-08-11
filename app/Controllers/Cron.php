@@ -158,7 +158,7 @@ class Cron extends \Controller{
                         'notification_type' => $notification_type,
                         'description' => $description1,
                         'seen' => 0,
-                        'datecreated' => $dates 
+                        'datecreated' => $dateending 
                     ];
 
                     if($currentdate === $dateending1){
