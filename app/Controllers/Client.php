@@ -125,12 +125,16 @@ class Client extends \Controller{
             $quantity = $_POST['quantity'];
             $first_payment = $_POST['first_payment'];
             $duration = $_POST['duration'];
+            $plot_number = $_POST['plot_number'];
+            $allocation_number = $_POST['allocation_number'];
 
+            //getting property details
             $Properties = $this->PropertyModel->getProperty($property_id);
 
             $property_name = $Properties[0]->property_name;
             $property_amount = $Properties[0]->amount;
 
+            //calculation ending date
             $datecreated =  date("d-m-Y");
             $d=strtotime('+'.$duration.' Months');
             $endingdate = date("d-m-Y", $d);
@@ -156,6 +160,8 @@ class Client extends \Controller{
                 'first_payment' => $first_payment,
                 'amount_paid' => $first_payment,
                 'amount_due' => $amount_due,
+                'plot_number' => $plot_number,
+                'allocation_number' => $allocation_number,
                 'duration' => $duration,
                 'duration_dates' => $return_dates,
                 'datecreated' => $datecreated,

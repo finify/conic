@@ -94,4 +94,34 @@ class Purchase extends \Controller{
 
         $this->editpurchaseAction($purchase_id,$data);
     }
+
+
+    public function updatepurchaseAction($param){
+        $param = intval($param);
+
+        $data = [];
+        if($_POST){
+            $plot_number = $_POST['plot_number'];
+            $allocation_number = $_POST['allocation_number'];
+            $fields = [
+                'plot_number' => $plot_number,
+                'allocation_number' => $allocation_number
+            ];
+
+            $updated = $this->PurchaseModel->updatePurchase($fields,$param);
+
+
+            if($updated){
+                $data = [
+                    'updatedstatus'=> true
+                ];
+            }else{
+                $data = [
+                    'updatedstatus'=> false
+                ];
+            }
+        
+        }
+        $this->editpurchaseAction($param,$data);
+    }
 }

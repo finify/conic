@@ -89,7 +89,24 @@ $client_id = $Client->id;
                                     name="duration"
                                     />
                                   </div>
-                                  
+                                  <div class="col-12 mb-3">
+                                    <label for="organization" class="form-label">Plot number(optional)</label>
+                                    <input
+                                    type="text"
+                                    class="form-control"
+                                    id="organization"
+                                    name="plot_number"
+                                    />
+                                  </div>
+                                  <div class="col-12 mb-3">
+                                    <label for="organization" class="form-label">Allocation number(optional)</label>
+                                    <input
+                                    type="text"
+                                    class="form-control"
+                                    id="organization"
+                                    name="allocation_number"
+                                    />
+                                  </div>
                                 </div>
                               </div>
                               <div class="modal-footer">

@@ -12,6 +12,8 @@ $property_quantity = $Purchase->quantity;
 $first_payment = $Purchase->first_payment;
 $amount_paid = $Purchase->amount_paid;
 $amount_due = $Purchase->amount_due;
+$plot_number = $Purchase->plot_number;
+$allocation_number = $Purchase->allocation_number;
 $duration = $Purchase->duration;
 $duration_dates = $Purchase->duration_dates;
 $datecreated = $Purchase->datecreated;
@@ -92,23 +94,42 @@ $client_last_name = $Client->last_name;
                 </ul>
                 <div class="card mb-4">
                 <?php
-            if(isset($data['insertedstatus'])){
-                if($data['insertedstatus'] === true){
-                    echo "
-                    <div class='alert alert-success alert-dismissible' role='alert'>
-                        Payments Successfully
-                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-                    </div>";
-                }else{
-                    echo "
-                    <div class='alert alert-danger alert-dismissible' role='alert'>
-                       Payment not made
-                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
-                    </div>";
+                if(isset($data['insertedstatus'])){
+                    if($data['insertedstatus'] === true){
+                        echo "
+                        <div class='alert alert-success alert-dismissible' role='alert'>
+                            Payments Successfully
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                        </div>";
+                    }else{
+                        echo "
+                        <div class='alert alert-danger alert-dismissible' role='alert'>
+                        Payment not made
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                        </div>";
+                    }
+                
                 }
-               
-            }
-            ?>
+                ?>
+
+<?php
+                if(isset($data['updatedstatus'])){
+                    if($data['updatedstatus'] === true){
+                        echo "
+                        <div class='alert alert-success alert-dismissible' role='alert'>
+                            Purchase updated successfully
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                        </div>";
+                    }else{
+                        echo "
+                        <div class='alert alert-danger alert-dismissible' role='alert'>
+                        Purchase not updated
+                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                        </div>";
+                    }
+                
+                }
+                ?>
                     <h5 class="card-header">Property Details</h5>
                     <!-- Account -->
                     <div class="card-body">
@@ -180,6 +201,37 @@ $client_last_name = $Client->last_name;
                             </tbody>
                             </table>
                         </div>
+                    </div>
+                    <!-- /Account -->
+                </div>
+                <div class="card mb-4">
+                    <h5 class="card-header">Edit Purchase details</h5>
+                    
+                    <hr class="my-0" />
+                    <div class="card-body">
+                    <form id="formAccountSettings" action="<?=PROOT?>purchase/updatepurchase/<?=$purchase_id?>" method="POST">
+                        <div class="row">
+                          <div class="mb-3 col-md-6">
+                            <label for="firstName" class="form-label">Plot number</label>
+                            <input
+                              class="form-control"
+                              type="text"
+                              id="firstName"
+                              name="plot_number"
+                              value="<?=$plot_number?>"
+                              autofocus
+                            />
+                          </div>
+                          <div class="mb-3 col-md-6">
+                            <label for="lastName" class="form-label">Allocation number</label>
+                            <input class="form-control" type="text" name="allocation_number" id="lastName" value="<?=$allocation_number?>" />
+                          </div>
+                          
+                        </div>
+                        <div class="mt-2">
+                          <button type="submit" class="btn btn-primary me-2">Save changes</button>
+                        </div>
+                        </form>
                     </div>
                     <!-- /Account -->
                 </div>
