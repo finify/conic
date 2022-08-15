@@ -83,4 +83,22 @@ class Property extends \Controller{
         }
         $this->editpropertyAction($param,$data);
     }
+
+    public function deletepropertyAction($param){
+        $data = [];
+         $params = intval($param);
+         $deleted = $this->PropertyModel->deleteProperty($params);
+         if($deleted){
+            $data = [
+                'deletedstatus'=> true
+            ];
+        }else{
+            $data = [
+                'deletedstatus'=> false
+            ];
+        }
+        $Properties = $this->PropertyModel->getProperties();
+        $this->view->Properties = $Properties;
+        $this->view->render('home/property',$data);
+    }
 }
