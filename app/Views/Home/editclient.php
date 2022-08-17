@@ -155,7 +155,24 @@ $client_id = $Client->id;
             }
             ?>
 
-            
+<?php
+            if(isset($data['deletedstatus'])){
+                if($data['deletedstatus'] === true){
+                    echo "
+                    <div class='alert alert-success alert-dismissible' role='alert'>
+                        Purchase Deleted Successfully
+                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                    </div>";
+                }else{
+                    echo "
+                    <div class='alert alert-danger alert-dismissible' role='alert'>
+                       Could not Delete Purchase
+                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                    </div>";
+                }
+               
+            }
+            ?>
                 <div class="card mb-4">
                     <h5 class="card-header">Edit Client Details</h5>
                     <button
@@ -234,6 +251,7 @@ $client_id = $Client->id;
                             $ClientPurchases = $this->ClientPurchases;
                             if(!empty($ClientPurchases)){
                                 foreach($ClientPurchases as $ClientPurchase){
+                                    $Client_id = intval($ClientPurchase->client_id);
                                     if($ClientPurchase->purchase_status == 0){
                                         $status = "<span class='badge bg-label-primary me-1'>Active</span>";
                                     }elseif($ClientPurchase->purchase_status == 1){
@@ -255,7 +273,7 @@ $client_id = $Client->id;
                                                     <a class='dropdown-item' href='".PROOT."purchase/editpurchase/$ClientPurchase->id'
                                                     ><i class='bx bx-edit-alt me-1'></i> Edit Purchase</a
                                                     >
-                                                    <a class='dropdown-item' href='".PROOT."property/deleteproperty/$Property->id'
+                                                    <a class='dropdown-item' href='".PROOT."client/deletepurchase/$ClientPurchase->id/ $Client_id'
                                                     ><i class='bx bx-trash me-1'></i> Delete</a
                                                     >
                                                 </div>

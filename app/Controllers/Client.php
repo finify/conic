@@ -12,7 +12,7 @@ class Client extends \Controller{
         $this->load_model('Purchase');
     }
 
-    public function indexAction(){
+    public function indexAction($data = null){
         $data = [];
         if($_POST){
             $first_name = $_POST['first_name'];
@@ -184,6 +184,24 @@ class Client extends \Controller{
         }
         $this->editclientAction($param,$data);
     }
+
+    public function deletepurchaseAction($purchase_id,$client_id){
+        $data = [];
+        $purchase_id = intval($purchase_id);
+       
+        $deleted = $this->PurchaseModel->deletePurchase($purchase_id);
+
+        if($deleted){
+            $data = [
+                'deletedstatus'=> true
+            ];
+        }else{
+            $data = [
+                'deletedstatus'=> false
+            ];
+        }
+       $this->editclientAction($client_id,$data);
+   }
 
     
 }
